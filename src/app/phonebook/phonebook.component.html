@@ -1,0 +1,69 @@
+<header class="header">
+  My phone book!
+</header>
+<div class="conteiner">
+  <hr>
+  <div class="searchBlock">
+  <input type="text" class="input" (input)="cross()"  [(ngModel)]="searchName" name="searchName">
+  <img (click)="close()" *ngIf="clearCross" src="assets/times-solid.svg" class="img1" alt="">
+  <button class="add" (click)="addPhone()" (click)="openModal(template)">add phone</button>
+</div>
+  <hr>
+</div>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Add phone</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+     <img (click)="close()" src="assets/times-solid.svg" class="img" alt="">
+    </button>
+  </div>
+  <!-- <div class="modal-body"> -->
+    <div class="form">
+      <input type="text" [(ngModel)]="fname" name="fname" placeholder="first name goes here">
+      <input type="text" [(ngModel)]="sname" name="sname" placeholder="second name goes here">
+      <input type="text" [(ngModel)]="number" name="number" placeholder="number phone goes here">
+    <!-- </div> -->
+  </div>
+  <button class="save" (click)="modalRef.hide()" (click)="save()">Save</button>
+</ng-template>
+<!-- <div *ngIf="!hide; else some"></div>
+<ng-template #template>
+  <div class="hideBlock" *ngIf="hide">
+    <div class="tittleBlock">
+      <div class="text">Add phone</div>
+      <img (click)="modalRef.hide()" (click)="close()" src="assets/times-solid.svg" class="img" alt="">
+    </div>
+    <div class="form">
+      <input type="text" [(ngModel)]="fname" name="fname" placeholder="first name goes here">
+      <input type="text" [(ngModel)]="sname" name="sname" placeholder="second name goes here">
+      <input type="text" [(ngModel)]="number" name="number" placeholder="number phone goes here">
+    </div>
+    <button class="save" (click)="save()">Save</button>
+  </div>
+</ng-template> -->
+<table class="table mytable">
+  <thead>
+    <tr>
+      <th scope="col" [class.active]="change === 'fname'" (click)="ischeck ? sort('fname') : sort()">First name <span
+          [hidden]="ischeck">▼</span><span [hidden]="!ischeck">▲</span></th>
+      <th scope="col" [class.active]="change === 'sname'" (click)="ischeck1 ? sort1('sname') : sort1()">Last name <span
+          [hidden]="ischeck1">▼</span><span [hidden]="!ischeck1">▲</span></th>
+      <th scope="col" [class.active]="change === 'number'" (click)="ischeck2 ? sort2('number') : sort2()">Number <span
+          [hidden]="ischeck2">▼</span><span [hidden]="!ischeck2">▲</span></th>
+      <th scope="col">Edit</th>
+      <th scope="col">DELETE</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr *ngFor="let book of books | search:searchName ;index as i">
+      <td scope="row">{{book.fname }}</td>
+      <td>{{ book.sname }}</td>
+      <td>{{ book.number }}</td>
+      <td><button class="edit" (click)="openModal(template)"  (click)="edit(i)">Edit</button></td>
+      <td><button class="del" (click)="del(i)">Delete</button></td>
+    </tr>
+
+  </tbody>
+</table>
